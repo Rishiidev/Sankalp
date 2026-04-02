@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StoreProvider, useStore } from './lib/store';
 import { Layout } from './components/Layout';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Onboarding } from './screens/Onboarding';
 import { Home } from './screens/Home';
 import { Sadhana } from './screens/Sadhana';
@@ -49,8 +50,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <StoreProvider>
-      <AppContent />
-    </StoreProvider>
+    <ErrorBoundary>
+      <StoreProvider>
+        <AppContent />
+      </StoreProvider>
+    </ErrorBoundary>
   );
 }

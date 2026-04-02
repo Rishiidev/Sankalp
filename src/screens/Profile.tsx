@@ -89,7 +89,7 @@ export function Profile() {
             ) : (
               <h2 className="text-2xl font-bold">{user.name}</h2>
             )}
-            <p className="text-sm text-slate-400">Joined {format(new Date(), 'MMM yyyy')}</p>
+            <p className="text-sm text-slate-400">Joined {format(new Date(user.createdAt || Date.now()), 'MMM yyyy')}</p>
           </div>
         </div>
 

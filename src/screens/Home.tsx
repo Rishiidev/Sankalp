@@ -60,7 +60,7 @@ export function Home() {
           text: shareText,
         });
       } catch (err) {
-        console.log('Error sharing:', err);
+        /* Share failed or was cancelled — no action needed */
       }
     } else {
       navigator.clipboard.writeText(shareText);

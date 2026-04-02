@@ -11,6 +11,7 @@ export interface UserData {
   xp: number;
   streak: number;
   lastActiveDate: string;
+  createdAt: string;
   onboardingCompleted: boolean;
   theme?: 'midnight' | 'dawn' | 'temple';
   hapticsEnabled?: boolean;
@@ -49,6 +50,7 @@ export interface ChantChallenge {
   progress: number;
   deadline?: string;
   completed: boolean;
+  completedAt?: string;
 }
 
 export interface CustomMeditation {
@@ -133,7 +135,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           newStreak = 0; // Streak broken
         }
 
-        const updatedUser = { ...userData, streak: newStreak, lastActiveDate: new Date().toISOString() };
+        const updatedUser = { ...userData, streak: newStreak, lastActiveDate: new Date().toISOString(), createdAt: userData.createdAt || userData.lastActiveDate };
         if (diff > 0) {
           await saveUser(updatedUser);
         }
@@ -149,6 +151,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           xp: 0,
           streak: 0,
           lastActiveDate: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
           onboardingCompleted: false,
           theme: 'midnight',
           hapticsEnabled: true,
@@ -294,6 +297,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const removeCustomTrack = async (id: string) => {
+    const track = customTracks.find(t => t.id === id);
+    if (track) URL.revokeObjectURL(track.url);
     await deleteCustomAudio(id);
     setCustomTracks(customTracks.filter(t => t.id !== id));
   };
@@ -409,6 +414,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const removeCustomMeditation = async (id: string) => {
+    const meditation = customMeditations.find(m => m.id === id);
+    if (meditation) URL.revokeObjectURL(meditation.url);
     await deleteCustomMeditation(id);
     setCustomMeditations(customMeditations.filter(m => m.id !== id));
   };

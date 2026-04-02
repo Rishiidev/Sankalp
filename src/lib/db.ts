@@ -10,6 +10,7 @@ interface SadhanaDB extends DBSchema {
       xp: number;
       streak: number;
       lastActiveDate: string;
+      createdAt: string;
       onboardingCompleted: boolean;
       theme?: 'midnight' | 'dawn' | 'temple';
       hapticsEnabled?: boolean;
@@ -18,6 +19,7 @@ interface SadhanaDB extends DBSchema {
         focusMinutes?: number;
         breatheSessions?: number;
       };
+      favoriteQuotes?: { text: string; source: string }[];
     };
   };
   journal: {
